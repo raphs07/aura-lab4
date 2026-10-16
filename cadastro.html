@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151a33">
+<title>Cadastro – Aura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page" data-page="cadastro">
+
+<header data-site-header></header>
+
+<main class="auth">
+  <section class="auth-art">
+    <div data-flower></div>
+    <div>
+      <h1>Faça parte da rede Aura</h1>
+      <p>Juntas, a gente transforma o medo em liberdade e constrói cidades mais seguras.</p>
+      <ul><li>Rotas mais seguras</li><li>Mapa colaborativo</li><li>Safe Zones</li></ul>
+    </div>
+  </section>
+
+  <section class="auth-panel">
+    <h2>Criar conta</h2>
+    <p class="sub">Escolha como você quer participar do Aura.</p>
+
+    <div class="tabs" id="tabs" data-active="0" role="tablist" aria-label="Tipo de conta">
+      <span class="indicator" aria-hidden="true"></span>
+      <button type="button" role="tab" id="tab-usuaria" aria-selected="true" aria-controls="form-usuaria" data-role="usuaria">Sou usuária</button>
+      <button type="button" role="tab" id="tab-empresa" aria-selected="false" aria-controls="form-empresa" data-role="empresa">Sou empresa</button>
+    </div>
+
+    <!-- USUÁRIA -->
+    <form class="form" id="form-usuaria" data-role-panel="usuaria" role="tabpanel" aria-labelledby="tab-usuaria" data-demo novalidate>
+      <div class="field">
+        <label for="u-nome">Nome completo</label>
+        <input id="u-nome" name="nome" type="text" autocomplete="name" placeholder="Como você se chama?" required>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="u-email">E-mail</label>
+          <input id="u-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+        </div>
+        <div class="field">
+          <label for="u-tel">Celular <small>(opcional)</small></label>
+          <input id="u-tel" name="telefone" type="tel" inputmode="tel" data-mask="phone" autocomplete="tel" placeholder="(61) 90000-0000">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="u-senha">Senha</label>
+          <div class="pw"><input id="u-senha" name="senha" type="password" minlength="8" autocomplete="new-password" placeholder="Mín. 8 caracteres" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+        </div>
+        <div class="field">
+          <label for="u-senha2">Confirmar senha</label>
+          <div class="pw"><input id="u-senha2" name="senha2" type="password" data-confirm="u-senha" autocomplete="new-password" placeholder="Repita a senha" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" required> <span>Li e aceito os termos de uso e a política de privacidade.</span></label>
+      <button class="btn btn-lamp btn-wide" type="submit">Criar minha conta</button>
+    </form>
+
+    <!-- EMPRESA -->
+    <form class="form" id="form-empresa" data-role-panel="empresa" role="tabpanel" aria-labelledby="tab-empresa" data-demo novalidate hidden>
+      <div class="note">Empresas parceiras podem se tornar uma <b>Safe Zone</b>: um ponto físico de apoio para as usuárias do Aura.</div>
+      <div class="row2">
+        <div class="field">
+          <label for="e-nome">Nome fantasia</label>
+          <input id="e-nome" name="nome_fantasia" type="text" autocomplete="organization" placeholder="Nome do estabelecimento" required>
+        </div>
+        <div class="field">
+          <label for="e-cnpj">CNPJ</label>
+          <input id="e-cnpj" name="cnpj" type="text" inputmode="numeric" data-mask="cnpj" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" title="Use o formato 00.000.000/0000-00" placeholder="00.000.000/0000-00" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="e-tipo">Tipo de estabelecimento</label>
+          <select id="e-tipo" name="tipo" required>
+            <option value="" selected disabled>Selecione…</option>
+            <option>Farmácia</option>
+            <option>Padaria ou café</option>
+            <option>Restaurante ou bar</option>
+            <option>Posto de combustível</option>
+            <option>Loja ou shopping</option>
+            <option>Faculdade ou escola</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="e-resp">Responsável</label>
+          <input id="e-resp" name="responsavel" type="text" autocomplete="name" placeholder="Nome de quem responde" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="e-email">E-mail comercial</label>
+          <input id="e-email" name="email" type="email" autocomplete="email" placeholder="contato@empresa.com" required>
+        </div>
+        <div class="field">
+          <label for="e-tel">Celular / WhatsApp</label>
+          <input id="e-tel" name="telefone" type="tel" inputmode="tel" data-mask="phone" autocomplete="tel" placeholder="(61) 90000-0000" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="e-senha">Senha</label>
+          <div class="pw"><input id="e-senha" name="senha" type="password" minlength="8" autocomplete="new-password" placeholder="Mín. 8 caracteres" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+        </div>
+        <div class="field">
+          <label for="e-senha2">Confirmar senha</label>
+          <div class="pw"><input id="e-senha2" name="senha2" type="password" data-confirm="e-senha" autocomplete="new-password" placeholder="Repita a senha" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" checked> <span>Quero participar da rede de Safe Zones.</span></label>
+      <label class="check"><input type="checkbox" required> <span>Li e aceito os termos de uso e a política de privacidade.</span></label>
+      <button class="btn btn-lamp btn-wide" type="submit">Cadastrar minha empresa</button>
+    </form>
+
+    <p class="switch-line">Já tem conta? <a href="login.html" data-keep-role>Entrar</a></p>
+  </section>
+</main>
+
+<script src="js/flower.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

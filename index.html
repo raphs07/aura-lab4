@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151a33">
+<title>Aura – Segurança inteligente para mulheres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home intro-pending" data-page="home">
+<div class="intro" id="intro" role="status" aria-label="Bem-vindo para o seu site seguro">
+  <div class="intro-group">
+    <div class="flower-wrap"><div data-flower></div></div>
+    <div class="intro-text">Bem-vindo para<br>o seu site seguro</div>
+  </div>
+  <button class="intro-skip" id="intro-skip" type="button">Pular animação</button>
+</div>
+<noscript><style>.intro{display:none!important}.intro-pending .reveal{opacity:1!important;animation:none!important}</style></noscript>
+
+<header data-site-header></header>
+
+<main class="stage">
+  <section class="deck reveal" style="--d:.3s" id="deck" aria-roledescription="carrossel" aria-label="Conheça o Aura">
+
+    <article class="card c1" data-pos="0">
+      <h2>Segurança que chega antes</h2>
+      <p>O Aura é uma plataforma de segurança inteligente feita para mulheres. Ele une inteligência artificial à percepção de quem anda pelas ruas todos os dias, para prevenir riscos em vez de só reagir depois.</p>
+      <ul class="trio">
+        <li><strong>Prevenção</strong>Rotas e alertas antes do risco, não depois dele.</li>
+        <li><strong>Percepção real</strong>O que as mulheres sentem, além dos boletins de ocorrência.</li>
+        <li><strong>Comunidade</strong>Cada avaliação melhora o caminho de outra mulher.</li>
+      </ul>
+      <div class="card-foot">
+        <span class="counter">1 de 3</span>
+        <button class="btn btn-ink" type="button" data-next>Próximo</button>
+      </div>
+    </article>
+
+    <article class="card c2" data-pos="1">
+      <h2>Seu caminho, mais tranquilo</h2>
+      <p>O mapa mostra como a comunidade enxerga cada trecho e sugere o caminho mais seguro para você.</p>
+      <ol class="trio">
+        <li><strong><span class="n">1</span>Avalie</strong>Conte como se sentiu em ruas e lugares.</li>
+        <li><strong><span class="n">2</span>Escolha a rota</strong>Veja a opção mais segura em tempo real.</li>
+        <li><strong><span class="n">3</span>Peça apoio</strong>Acione, sem alarde, sua rede de confiança.</li>
+      </ol>
+      <div class="card-foot">
+        <span class="counter">2 de 3</span>
+        <button class="btn btn-ink" type="button" data-next>Próximo</button>
+      </div>
+    </article>
+
+    <article class="card c3" data-pos="2">
+      <h2>Para quem anda e para quem acolhe</h2>
+      <p>Mulheres que se deslocam sozinhas: no transporte público, a caminho da faculdade ou do trabalho, em viagem. E empresas que querem ser uma Safe Zone, um ponto de apoio dentro da rede de proteção.</p>
+      <div class="card-foot">
+        <span class="counter">3 de 3</span>
+        <div class="foot-actions">
+          <a class="btn btn-outline" href="cadastro.html?tipo=empresa">Cadastrar minha empresa</a>
+          <a class="btn btn-ink" href="cadastro.html?tipo=usuaria">Criar minha conta</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+  <div class="dots reveal" style="--d:.5s" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+</main>
+
+<script src="js/flower.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/intro.js"></script>
+<script src="js/cards.js"></script>
+</body>
+</html>

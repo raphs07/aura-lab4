@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151a33">
+<title>Entrar – Aura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page" data-page="login">
+
+<header data-site-header></header>
+
+<main class="auth">
+  <section class="auth-art">
+    <div data-flower></div>
+    <div>
+      <h1>Que bom ter você de volta</h1>
+      <p>Seu caminho mais seguro está te esperando.</p>
+      <ul><li>Prevenção</li><li>Comunidade</li><li>Liberdade</li></ul>
+    </div>
+  </section>
+
+  <section class="auth-panel">
+    <h2>Entrar</h2>
+    <p class="sub">Acesse sua conta de usuária ou de empresa parceira.</p>
+
+    <div class="tabs" id="tabs" data-active="0" role="tablist" aria-label="Tipo de conta">
+      <span class="indicator" aria-hidden="true"></span>
+      <button type="button" role="tab" id="tab-usuaria" aria-selected="true" aria-controls="form-usuaria" data-role="usuaria">Sou usuária</button>
+      <button type="button" role="tab" id="tab-empresa" aria-selected="false" aria-controls="form-empresa" data-role="empresa">Sou empresa</button>
+    </div>
+
+    <!-- USUÁRIA -->
+    <form class="form" id="form-usuaria" data-role-panel="usuaria" role="tabpanel" aria-labelledby="tab-usuaria" data-demo novalidate>
+      <div class="field">
+        <label for="lu-email">E-mail</label>
+        <input id="lu-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+      </div>
+      <div class="field">
+        <label for="lu-senha">Senha</label>
+        <div class="pw"><input id="lu-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+      </div>
+      <div class="form-links"><label class="check" style="align-items:center"><input type="checkbox"> <span>Manter conectada</span></label><a href="#" data-soon>Esqueci minha senha</a></div>
+      <button class="btn btn-lamp btn-wide" type="submit">Entrar</button>
+    </form>
+
+    <!-- EMPRESA -->
+    <form class="form" id="form-empresa" data-role-panel="empresa" role="tabpanel" aria-labelledby="tab-empresa" data-demo novalidate hidden>
+      <div class="field">
+        <label for="le-email">E-mail comercial ou CNPJ</label>
+        <input id="le-email" name="login" type="text" autocomplete="username" placeholder="contato@empresa.com" required>
+      </div>
+      <div class="field">
+        <label for="le-senha">Senha</label>
+        <div class="pw"><input id="le-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="pw-toggle" type="button" aria-label="Mostrar senha">Mostrar</button></div>
+      </div>
+      <div class="form-links"><label class="check" style="align-items:center"><input type="checkbox"> <span>Manter conectada</span></label><a href="#" data-soon>Esqueci minha senha</a></div>
+      <button class="btn btn-lamp btn-wide" type="submit">Entrar como empresa</button>
+    </form>
+
+    <p class="switch-line">Ainda não tem conta? <a href="cadastro.html" data-keep-role>Cadastre-se</a></p>
+  </section>
+</main>
+
+<script src="js/flower.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

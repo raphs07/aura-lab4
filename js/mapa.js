@@ -52,27 +52,30 @@ var marcadoresPrevia = {
 
 var temporizadoresBusca = {};
 
-var CONTEXTO_BUSCA =
-    'Vicente Pires, Brasília, Distrito Federal, Brasil';
 
+var CONTEXTO_BUSCA = 'Distrito Federal, Brasil';
 
 // Pesquisar várias opções de endereço
 async function buscarSugestoesEndereco(endereco) {
 
-    var consulta = endereco;
+    var consulta = endereco.trim();
 
-    if (!/brasília|brasilia|distrito federal|\bdf\b/i.test(consulta)) {
+    // Priorizar pesquisas dentro do Distrito Federal
+    if (!/distrito federal|\bdf\b/i.test(consulta)) {
         consulta += ', ' + CONTEXTO_BUSCA;
     }
 
     var parametros = new URLSearchParams({
         format: 'jsonv2',
-        limit: '5',
+        limit: '10',
         addressdetails: '1',
         countrycodes: 'br',
         'accept-language': 'pt-BR',
-        viewbox: '-48.10,-15.72,-47.95,-15.88',
-        bounded: '0',
+
+        // Área ampliada para abranger todo o Distrito Federal
+        viewbox: '-48.30,-15.45,-47.25,-16.10',
+        bounded: '1',
+
         q: consulta
     });
 
@@ -87,8 +90,8 @@ async function buscarSugestoesEndereco(endereco) {
     }
 
     return await resposta.json();
-
 }
+
 
 
 // Remover marcador de prévia

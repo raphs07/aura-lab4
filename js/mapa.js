@@ -53,29 +53,32 @@ var marcadoresPrevia = {
 var temporizadoresBusca = {};
 
 
+
 var CONTEXTO_BUSCA = 'Distrito Federal, Brasil';
 
-// Pesquisar várias opções de endereço
 async function buscarSugestoesEndereco(endereco) {
 
     var consulta = endereco.trim();
 
-    // Priorizar pesquisas dentro do Distrito Federal
+    // Acrescentar o DF quando a usuária não informar outra localização
     if (!/distrito federal|\bdf\b/i.test(consulta)) {
-        consulta += ', ' + CONTEXTO_BUSCA;
+        consulta += ', Distrito Federal, Brasil';
     }
 
     var parametros = new URLSearchParams({
         format: 'jsonv2',
-        limit: '10',
+        limit: '15',
         addressdetails: '1',
         countrycodes: 'br',
         'accept-language': 'pt-BR',
 
-        // Área ampliada para abranger todo o Distrito Federal
-        viewbox: '-48.30,-15.45,-47.25,-16.10',
-        bounded: '1',
+        // Área ampla para priorizar todo o Distrito Federal
+        viewbox: '-48.35,-15.40,-47.20,-16.15',
 
+        // Prioriza a área, mas não limita rigidamente os resultados
+        bounded: '0',
+
+        dedupe: '1',
         q: consulta
     });
 
@@ -86,11 +89,14 @@ async function buscarSugestoesEndereco(endereco) {
     var resposta = await fetch(url);
 
     if (!resposta.ok) {
-        throw new Error('Não foi possível pesquisar os endereços.');
+        throw new Error(
+            'Não foi possível pesquisar os endereços.'
+        );
     }
 
     return await resposta.json();
 }
+
 
 
 

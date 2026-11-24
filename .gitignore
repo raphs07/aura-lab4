@@ -1,0 +1,14 @@
+# Arquivos compilados Java
+build/
+*.class
+
+# Dependências
+node_modules/
+
+# Arquivos de configuração e segredos
+.env
+.env.local
+
+# Configurações do sistema
+.DS_Store
+Thumbs.db

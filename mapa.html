@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mapa Aura – Seu caminho seguro</title>
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="css/mapa.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+
+        <a href="#" class="logo" id="logoAura">
+            <span class="flor-logo">❀</span>
+            <span>AURA</span>
+        </a>
+
+        <nav class="menu">
+
+            <button class="item-menu" id="btnPerfil" type="button">
+                Perfil
+            </button>
+
+            <button class="item-menu" id="btnRotas" type="button">
+                Rotas
+            </button>
+
+            <button class="item-menu item-sos" id="btnSOS" type="button">
+                SOS
+            </button>
+
+            <!-- FOTO DE PERFIL -->
+            <button
+                class="avatar-usuario"
+                id="btnFotoPerfil"
+                type="button"
+                title="Abrir perfil"
+                aria-label="Abrir perfil">
+
+                <span class="avatar-cabeca"></span>
+                <span class="avatar-corpo"></span>
+
+            </button>
+
+            <button class="item-menu" id="btnSair" type="button">Sair</button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- MAPA -->
+    <div id="map"></div>
+
+
+    <!-- ÁREA DE ROTAS -->
+    <main id="painel-rota" class="painel pagina">
+
+        <button class="fechar-painel" type="button" aria-label="Fechar painel">
+            ×
+        </button>
+
+        <div class="cabecalho-painel">
+
+            <div>
+                <span class="etiqueta">AURA MAPAS</span>
+                <h2>Encontre seu caminho</h2>
+                <p>Compare rotas e consulte os alertas disponíveis.</p>
+            </div>
+
+            <span class="icone-painel">⌖</span>
+
+        </div>
+
+
+        <label for="origem">Ponto de partida</label>
+
+        <input
+            type="text"
+            id="origem"
+            placeholder="Digite o endereço de partida">
+
+        <div id="sugestoes-origem" class="sugestoes-endereco"></div>
+
+
+        <label for="destino">Destino</label>
+
+        <input
+            type="text"
+            id="destino"
+            placeholder="Digite para onde deseja ir">
+
+        <div id="sugestoes-destino" class="sugestoes-endereco"></div>
+
+
+        <button id="btnBuscar" class="botao-principal" type="button">
+            Buscar rotas
+        </button>
+
+
+        <div id="informacoes-rota">
+            Informe a origem e o destino para comparar os caminhos.
+        </div>
+
+        <div id="opcoes-rotas"></div>
+
+
+        <!-- CADASTRO DE ALERTAS -->
+        <div id="painel-alertas">
+
+            <div class="divisor-painel"></div>
+
+            <h3>Registrar uma ocorrência</h3>
+
+            <p class="texto-apoio">
+                Compartilhe informações que possam ajudar outras mulheres.
+            </p>
+
+            <form id="formulario-alerta">
+
+                <label for="endereco-alerta">Local da ocorrência</label>
+
+                <input
+                    type="text"
+                    id="endereco-alerta"
+                    placeholder="Digite o endereço"
+                    required>
+
+                <div id="sugestoes-relato" class="sugestoes-endereco"></div>
+
+
+                <label for="categoria-alerta">Categoria</label>
+
+                <select id="categoria-alerta" required>
+                    <option value="">Selecione uma categoria</option>
+                    <option value="Assédio">Assédio</option>
+                    <option value="Tentativa de roubo">Tentativa de roubo</option>
+                    <option value="Iluminação insuficiente">Iluminação insuficiente</option>
+                    <option value="Local deserto">Local deserto</option>
+                    <option value="Outro">Outro</option>
+                </select>
+
+
+                <label for="descricao-alerta">Descrição</label>
+
+                <textarea
+                    id="descricao-alerta"
+                    placeholder="Conte o que aconteceu..."
+                    maxlength="1000"
+                    required></textarea>
+
+
+                <label for="data-alerta">Data da ocorrência</label>
+
+                <input
+                    type="date"
+                    id="data-alerta"
+                    required>
+
+
+                <button
+                    type="submit"
+                    id="btnEnviarAlerta"
+                    class="botao-principal">
+                    Enviar relato
+                </button>
+
+                <div id="mensagem-alerta"></div>
+
+            </form>
+
+        </div>
+
+
+        <!-- LEGENDA -->
+        <div id="legenda">
+
+            <div class="divisor-painel"></div>
+
+            <h3>Indicadores de risco registrado</h3>
+
+            <div class="item-legenda">
+                <span class="cor-legenda verde"></span>
+                <span>Verde — Sem alertas cadastrados</span>
+            </div>
+
+            <div class="item-legenda">
+                <span class="cor-legenda amarelo"></span>
+                <span>Amarelo — Atenção</span>
+            </div>
+
+            <div class="item-legenda">
+                <span class="cor-legenda vermelho"></span>
+                <span>Vermelho — Alto risco registrado</span>
+            </div>
+
+            <p class="aviso">
+                A ausência de alertas não garante que um local seja seguro.
+                Os tempos são estimativas a pé.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- ÁREA DE PERFIL -->
+    <main id="painel-perfil" class="painel pagina">
+
+        <button class="fechar-painel" type="button" aria-label="Fechar painel">
+            ×
+        </button>
+
+        <div class="cabecalho-painel">
+
+            <div>
+                <span class="etiqueta">MINHA CONTA</span>
+                <h2>Meu perfil</h2>
+                <p>Gerencie suas informações pessoais.</p>
+            </div>
+
+            <span class="icone-painel">♙</span>
+
+        </div>
+
+        <section class="perfil-identidade">
+            <div class="perfil-avatar-grande">
+                <span class="avatar-cabeca"></span>
+                <span class="avatar-corpo"></span>
+            </div>
+
+            <div>
+                <h3 id="nome-perfil-exibicao">Minha conta AURA</h3>
+                <p>Suas informações e contatos de confiança</p>
+            </div>
+        </section>
+
+        <form id="formulario-perfil">
+
+            <h3 class="titulo-secao-perfil">Informações pessoais</h3>
+
+            <label for="perfil-nome">Nome</label>
+            <input
+                type="text"
+                id="perfil-nome"
+                placeholder="Como gostaria de ser chamada?"
+                maxlength="80">
+
+            <label for="perfil-email">E-mail</label>
+            <input
+                type="email"
+                id="perfil-email"
+                placeholder="seuemail@exemplo.com">
+
+            <label for="perfil-telefone">Telefone</label>
+            <input
+                type="tel"
+                id="perfil-telefone"
+                placeholder="(00) 00000-0000">
+
+            <div class="perfil-foto-aviso">
+                <div>
+                    <strong>Foto de perfil</strong>
+                    <p>A opção para escolher uma foto estará disponível em breve.</p>
+                </div>
+
+                <button type="button" class="botao-secundario" disabled>
+                    Alterar foto
+                </button>
+            </div>
+
+            <div class="divisor-painel"></div>
+
+            <h3 class="titulo-secao-perfil">Contato de emergência</h3>
+
+            <p class="texto-apoio">
+                Cadastre alguém de confiança que possa ser contatado quando necessário.
+                Este cadastro ainda não envia notificações automaticamente.
+            </p>
+
+            <label for="perfil-contato-nome">Nome do contato</label>
+            <input
+                type="text"
+                id="perfil-contato-nome"
+                placeholder="Nome de alguém de confiança"
+                maxlength="80">
+
+            <label for="perfil-contato-telefone">Telefone do contato</label>
+            <input
+                type="tel"
+                id="perfil-contato-telefone"
+                placeholder="(00) 00000-0000">
+
+            <button
+                type="submit"
+                class="botao-principal"
+                id="btnSalvarPerfil">
+                Salvar informações
+            </button>
+
+            <div
+                id="mensagem-perfil"
+                class="mensagem-perfil"
+                role="status"
+                aria-live="polite">
+            </div>
+
+        </form>
+
+        <div class="cartao-privacidade">
+            <strong>🔒 Sua privacidade</strong>
+            <p>
+                As informações deste formulário ficam salvas somente neste navegador.
+                Não são enviadas para uma central de atendimento nem compartilhadas
+                com serviços de emergência.
+            </p>
+        </div>
+
+    </main>
+
+
+    <!-- ÁREA SOS -->
+    <main id="painel-sos" class="painel pagina">
+
+        <button class="fechar-painel" type="button" aria-label="Fechar painel">
+            ×
+        </button>
+
+        <div class="cabecalho-painel">
+
+            <div>
+                <span class="etiqueta">ASSISTÊNCIA</span>
+                <h2>Central SOS</h2>
+                <p>Área de apoio e emergência.</p>
+            </div>
+
+            <span class="icone-painel icone-sos">✚</span>
+
+        </div>
+
+        <section class="sos-destaque">
+
+            <div class="sos-simbolo">✚</div>
+
+            <h3>Você não está sozinha.</h3>
+
+            <p>Se precisar de ajuda, utilize o botão abaixo.</p>
+
+            <button
+                type="button"
+                id="btnPedirAjuda"
+                class="botao-sos">
+
+                <span class="sos-ponto-pulso"></span>
+                Precisa de ajuda? Clique aqui.
+
+            </button>
+
+            <div
+                id="confirmacao-sos"
+                class="confirmacao-sos"
+                role="status"
+                aria-live="polite"
+                hidden>
+
+                <strong>Seu pedido de ajuda foi registrado no AURA.</strong>
+
+                <p>
+                    Fique com o celular próximo a você e procure um local seguro,
+                    se possível. Importante: o AURA ainda não está conectado à polícia,
+                    aos bombeiros ou a uma central de emergência, portanto este botão
+                    não envia sua localização nem solicita socorro real.
+                </p>
+
+                <p class="orientacao-emergencia">
+                    Se estiver em perigo imediato, ligue para 190
+                    (Polícia Militar) ou 193 (Corpo de Bombeiros).
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="sos-explicacao">
+
+            <h3>Como funciona o SOS?</h3>
+
+            <p>
+                Quando você precisar de ajuda, este recurso foi pensado para facilitar
+                o acesso a orientações e, futuramente, permitir o compartilhamento
+                da sua localização com serviços de emergência e contatos de confiança.
+                Mantenha seu celular por perto e busque um local seguro.
+                Sua segurança é nossa prioridade.
+            </p>
+
+        </section>
+
+        <div class="sos-aviso-tecnico">
+
+            <strong>Importante</strong>
+
+            <p>
+                Esta versão do AURA ainda não aciona órgãos públicos nem envia
+                alertas automaticamente. Em uma emergência, utilize os telefones oficiais.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- MAPA -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- CÓDIGO DAS ROTAS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/map-auth.js"></script>
+    <script src="js/mapa.js"></script>
+
+
+    <!-- NAVEGAÇÃO -->
+    <script>
+
+        const btnPerfil = document.getElementById('btnPerfil');
+        const btnRotas = document.getElementById('btnRotas');
+        const btnSOS = document.getElementById('btnSOS');
+        const btnFotoPerfil = document.getElementById('btnFotoPerfil');
+
+        const painelPerfil = document.getElementById('painel-perfil');
+        const painelRotas = document.getElementById('painel-rota');
+        const painelSOS = document.getElementById('painel-sos');
+
+        const botoesMenu = [
+            btnPerfil,
+            btnRotas,
+            btnSOS
+        ];
+
+        const paineis = {
+            perfil: painelPerfil,
+            rotas: painelRotas,
+            sos: painelSOS
+        };
+
+        var paginaAberta = null;
+
+
+        // Fechar todos os painéis
+        function fecharPaineis() {
+
+            Object.values(paineis).forEach(function (painel) {
+                painel.classList.remove('visivel');
+            });
+
+            botoesMenu.forEach(function (botao) {
+                botao.classList.remove('ativo');
+            });
+
+            paginaAberta = null;
+
+        }
+
+
+        // Abrir ou fechar um painel
+        function abrirPagina(pagina) {
+
+            if (paginaAberta === pagina) {
+
+                fecharPaineis();
+
+                setTimeout(function () {
+                    mapa.invalidateSize();
+                }, 150);
+
+                return;
+            }
+
+            fecharPaineis();
+
+            if (pagina === '') {
+                return;
+            }
+
+            paineis[pagina].classList.add('visivel');
+
+            if (pagina === 'perfil') {
+                btnPerfil.classList.add('ativo');
+            }
+
+            if (pagina === 'rotas') {
+                btnRotas.classList.add('ativo');
+            }
+
+            if (pagina === 'sos') {
+                btnSOS.classList.add('ativo');
+            }
+
+            paginaAberta = pagina;
+
+            setTimeout(function () {
+                mapa.invalidateSize();
+            }, 150);
+
+        }
+
+
+        // Botões do cabeçalho
+        btnPerfil.addEventListener('click', function () {
+            abrirPagina('perfil');
+        });
+
+        btnRotas.addEventListener('click', function () {
+            abrirPagina('rotas');
+        });
+
+        btnSOS.addEventListener('click', function () {
+            abrirPagina('sos');
+        });
+
+        // Foto de perfil abre a área de perfil
+        btnFotoPerfil.addEventListener('click', function () {
+            abrirPagina('perfil');
+        });
+
+        // Logo AURA fecha o painel e mostra o mapa
+        document.getElementById('logoAura').addEventListener('click', function (evento) {
+
+            evento.preventDefault();
+
+            fecharPaineis();
+
+            setTimeout(function () {
+                mapa.invalidateSize();
+            }, 150);
+
+        });
+
+
+        // Botões X de cada painel
+        document.querySelectorAll('.fechar-painel').forEach(function (botao) {
+
+            botao.addEventListener('click', function () {
+
+                fecharPaineis();
+
+                setTimeout(function () {
+                    mapa.invalidateSize();
+                }, 150);
+
+            });
+
+        });
+
+
+        // PERFIL: carregar e salvar informações neste navegador
+
+        const camposPerfil = [
+            'perfil-nome',
+            'perfil-email',
+            'perfil-telefone',
+            'perfil-contato-nome',
+            'perfil-contato-telefone'
+        ];
+
+
+        function carregarPerfil() {
+
+            camposPerfil.forEach(function (id) {
+
+                const campo = document.getElementById(id);
+                const valorSalvo = localStorage.getItem('aura-' + id);
+
+                if (campo && valorSalvo !== null) {
+                    campo.value = valorSalvo;
+                }
+
+            });
+
+            atualizarNomePerfil();
+
+        }
+
+
+        function atualizarNomePerfil() {
+
+            const nome = document.getElementById('perfil-nome').value.trim();
+
+            document.getElementById('nome-perfil-exibicao').textContent =
+                nome || 'Minha conta AURA';
+
+        }
+
+
+        document.getElementById('perfil-nome').addEventListener('input', atualizarNomePerfil);
+
+
+        document.getElementById('formulario-perfil').addEventListener('submit', function (evento) {
+
+            evento.preventDefault();
+
+            camposPerfil.forEach(function (id) {
+
+                const campo = document.getElementById(id);
+
+                localStorage.setItem('aura-' + id, campo.value.trim());
+
+            });
+
+            atualizarNomePerfil();
+
+            const mensagem = document.getElementById('mensagem-perfil');
+
+            mensagem.textContent = 'Suas informações foram salvas neste navegador.';
+            mensagem.classList.add('sucesso');
+
+        });
+
+
+        carregarPerfil();
+
+
+        // SOS: a confirmação só aparece após a interação da usuária.
+
+        document.getElementById('btnPedirAjuda').addEventListener('click', function () {
+
+            document.getElementById('confirmacao-sos').hidden = false;
+
+            this.textContent = 'Pedido registrado nesta tela';
+
+            this.classList.add('sos-acionado');
+
+        });
+
+
+        // Começar com todos os painéis fechados
+        fecharPaineis();
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1139 @@
+
+/* ==========================================
+   CONFIGURAÇÕES GERAIS
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #54263F;
+}
+
+body {
+    background: #8b3055;
+}
+
+
+/* ==========================================
+   CABEÇALHO
+========================================== */
+
+.cabecalho {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 76px;
+
+    background: rgba(155, 29, 96, 0.98);
+    border-bottom: 1px solid rgba(249, 186, 79, 0.861);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    box-shadow: 0 2px 15px rgba(84, 38, 63, 0.10);
+
+    z-index: 1000;
+}
+
+
+/* LOGO AURA */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #ff6da2;
+    text-decoration: none;
+
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.flor-logo {
+    display: inline-block;
+
+    color: #ffbd4c;
+    font-size: 34px;
+
+    animation: girarFlor 9s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes girarFlor {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ==========================================
+   MENU DO CABEÇALHO
+========================================== */
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.item-menu {
+    height: 43px;
+
+    padding: 0 19px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #ff6da2;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.item-menu:hover {
+    background: #e170a1;
+    color: #A52C68;
+}
+
+.item-menu.ativo {
+    background: #F8EAF0;
+    color: #A52C68;
+    box-shadow: inset 0 -2px #C49A50;
+}
+
+.item-sos {
+    color: #ff6da2;
+}
+
+.item-sos:hover {
+    background: #FCEEF3;
+    color: #7E214E;
+}
+
+.item-sos.ativo {
+    background: #F8E3EB;
+    color: #7E214E;
+}
+
+
+/* ==========================================
+   FOTO DE PERFIL
+========================================== */
+
+.avatar-usuario {
+    position: relative;
+
+    width: 43px;
+    height: 43px;
+
+    margin-left: 10px;
+
+    border: 2px solid #EAD5DF;
+    border-radius: 50%;
+
+    background: linear-gradient(145deg, #F8EAF0, #E6B9CC);
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.avatar-usuario:hover {
+    border-color: #C49A50;
+    transform: scale(1.06);
+}
+
+.avatar-cabeca {
+    position: absolute;
+
+    width: 13px;
+    height: 13px;
+
+    top: 8px;
+    left: 13px;
+
+    border-radius: 50%;
+
+    background: #A52C68;
+}
+
+.avatar-corpo {
+    position: absolute;
+
+    width: 27px;
+    height: 19px;
+
+    bottom: -5px;
+    left: 6px;
+
+    border-radius: 50% 50% 35% 35%;
+
+    background: #A52C68;
+}
+
+
+/* ==========================================
+   MAPA
+========================================== */
+
+#map {
+    position: fixed;
+
+    top: 76px;
+    left: 0;
+
+    width: 100%;
+    height: calc(100% - 76px);
+
+    z-index: 1;
+}
+
+/* Leve tonalidade rosada no mapa, sem esconder ruas ou nomes. */
+#map::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 350;
+
+    background: rgba(190, 105, 145, 0.10);
+    mix-blend-mode: multiply;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   PAINÉIS DAS PÁGINAS
+========================================== */
+
+.painel {
+    position: fixed;
+
+    top: 96px;
+    left: 25px;
+
+    width: 370px;
+    max-width: calc(100% - 50px);
+
+    max-height: calc(100% - 116px);
+
+    overflow-y: auto;
+
+    padding: 24px;
+
+    background: rgba(255, 223, 240, 0.98);
+
+    border: 1px solid rgba(196, 154, 80, 0.42);
+    border-radius: 17px;
+
+    box-shadow: 0 8px 30px rgba(84, 38, 63, 0.14);
+
+    z-index: 500;
+
+    display: none;
+}
+
+.painel.visivel {
+    display: block;
+}
+
+
+/* BARRA DE ROLAGEM */
+
+.painel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.painel::-webkit-scrollbar-thumb {
+    background: #E5C9D6;
+    border-radius: 10px;
+}
+
+.painel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* ==========================================
+   BOTÃO FECHAR PAINEL
+========================================== */
+
+.fechar-painel {
+    position: absolute;
+
+    top: 12px;
+    left: 13px;
+
+    width: 29px;
+    height: 29px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #a3175d;
+
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.fechar-painel:hover {
+    background: #F1DCE5;
+    color: #54263F;
+    transform: scale(1.08);
+}
+
+
+/* Espaço para o botão X */
+
+.cabecalho-painel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 25px;
+    margin-bottom: 23px;
+}
+
+
+/* ==========================================
+   CABEÇALHO DOS PAINÉIS
+========================================== */
+
+.etiqueta {
+    display: block;
+
+    color: #A52C68;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+
+    margin-bottom: 7px;
+}
+
+.cabecalho-painel h2 {
+    color: #54263F;
+    font-size: 23px;
+    margin-bottom: 7px;
+}
+
+.cabecalho-painel p {
+    color: #8D7B84;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.icone-painel {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #F8EAF0;
+    color: #A52C68;
+
+    font-size: 25px;
+}
+
+.icone-sos {
+    background: #FCEEF3;
+    color: #A52C68;
+}
+
+
+/* ==========================================
+   CAMPOS DO FORMULÁRIO
+========================================== */
+
+.painel label {
+    display: block;
+
+    margin-top: 15px;
+    margin-bottom: 7px;
+
+    color: #654A57;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.painel input,
+.painel select,
+.painel textarea {
+    width: 100%;
+
+    min-height: 43px;
+
+    padding: 11px 12px;
+
+    border: 1px solid #E9D7DF;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #54263F;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.painel input:focus,
+.painel select:focus,
+.painel textarea:focus {
+    border-color: #C49A50;
+    box-shadow: 0 0 0 3px rgba(196, 154, 80, 0.18);
+}
+
+.painel input::placeholder,
+.painel textarea::placeholder {
+    color: #B39DA7;
+}
+
+.painel textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.botao-principal {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-top: 18px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: linear-gradient(135deg, #A52C68, #7E214E);
+    border-bottom: 3px solid #C49A50;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.botao-principal:hover {
+    background: #7E214E;
+    transform: translateY(-1px);
+}
+
+.botao-principal:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* ==========================================
+   INFORMAÇÕES DAS ROTAS
+========================================== */
+
+#informacoes-rota {
+    margin-top: 17px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background: #FBF3F6;
+
+    color: #806C76;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+#opcoes-rotas {
+    margin-top: 12px;
+}
+
+.cartao-rota {
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 13px;
+
+    border: 1px solid #EAD9E1;
+    border-radius: 10px;
+
+    background: #fff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    color: #55505d;
+}
+
+.cartao-rota:hover {
+    border-color: #C49A50;
+    background: #FFFAFC;
+}
+
+.cartao-rota.selecionada {
+    border: 2px solid #C49A50;
+    background: #FFF8FB;
+}
+
+.floresta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 8px;
+}
+
+.flor {
+    font-size: 20px;
+}
+
+.nome-cor {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.detalhes-rota {
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.recomendada {
+    display: block;
+    margin-top: 7px;
+
+    color: #27865c;
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   SUGESTÕES DE ENDEREÇO
+========================================== */
+
+.sugestoes-endereco {
+    display: none;
+
+    width: 100%;
+    max-height: 190px;
+
+    overflow-y: auto;
+
+    margin-top: 4px;
+
+    border: 1px solid #E9D7DF;
+    border-radius: 8px;
+
+    background: #fff;
+
+    box-shadow: 0 5px 15px rgba(84, 38, 63, 0.10);
+
+    position: relative;
+    z-index: 800;
+}
+
+.sugestao-endereco {
+    display: block;
+
+    width: 100%;
+
+    padding: 11px;
+
+    border: none;
+    border-bottom: 1px solid #f0edf3;
+
+    background: white;
+
+    color: #56505e;
+
+    text-align: left;
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    cursor: pointer;
+}
+
+.sugestao-endereco:hover {
+    background: #F8EAF0;
+    color: #A52C68;
+}
+
+
+/* ==========================================
+   ALERTAS E RELATOS
+========================================== */
+
+.divisor-painel {
+    width: 100%;
+    height: 1px;
+
+    margin: 22px 0;
+
+    background: #EEDFE5;
+}
+
+#painel-alertas h3,
+#legenda h3 {
+    color: #54263F;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.texto-apoio {
+    color: #8D7B84;
+    font-size: 11px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+#mensagem-alerta {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   LEGENDA DO MAPA
+========================================== */
+
+.item-legenda {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 12px;
+
+    color: #765C69;
+    font-size: 11px;
+}
+
+.cor-legenda {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+}
+
+.verde {
+    background: #0ca962;
+}
+
+.amarelo {
+    background: #ffab1b;
+}
+
+.vermelho {
+    background: #ad1037;
+}
+
+.aviso {
+    margin-top: 14px;
+
+    color: #9A8790;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   PERFIL E SOS
+========================================== */
+
+.conteudo-em-breve {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px 10px;
+}
+
+.icone-em-breve {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 17px;
+
+    border-radius: 50%;
+
+    background: #F8EAF0;
+
+    color: #A52C68;
+
+    font-size: 32px;
+}
+
+.conteudo-em-breve h3 {
+    color: #54263F;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.conteudo-em-breve p {
+    max-width: 260px;
+
+    color: #8D7B84;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.etiqueta-status {
+    margin-top: 20px;
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: #F8EAF0;
+
+    color: #A52C68;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+
+/* ==========================================
+   PERFIL AURA
+========================================== */
+
+.perfil-identidade {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(196, 154, 80, 0.38);
+    border-radius: 13px;
+    background: #FFFAFC;
+}
+
+.perfil-avatar-grande {
+    position: relative;
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    border: 2px solid #E8C9D6;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #F8EAF0, #E6B9CC);
+}
+
+.perfil-avatar-grande .avatar-cabeca {
+    width: 17px;
+    height: 17px;
+    top: 9px;
+    left: 18px;
+}
+
+.perfil-avatar-grande .avatar-corpo {
+    width: 36px;
+    height: 25px;
+    bottom: -5px;
+    left: 9px;
+}
+
+.perfil-identidade h3 {
+    color: #54263F;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.perfil-identidade p,
+.perfil-foto-aviso p {
+    color: #8D7B84;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.titulo-secao-perfil {
+    color: #54263F;
+    font-size: 14px;
+    margin: 8px 0 5px;
+}
+
+.perfil-foto-aviso {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-top: 17px;
+    padding: 13px;
+
+    border: 1px solid #E8CFDA;
+    border-radius: 10px;
+
+    background: #FFFAFC;
+}
+
+.perfil-foto-aviso strong {
+    color: #654A57;
+    font-size: 12px;
+}
+
+.botao-secundario {
+    flex: 0 0 auto;
+
+    padding: 9px 11px;
+
+    border: 1px solid #E8CFDA;
+    border-radius: 8px;
+
+    background: #F8EAF0;
+    color: #A52C68;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: not-allowed;
+    opacity: .7;
+}
+
+.mensagem-perfil {
+    min-height: 18px;
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.mensagem-perfil.sucesso {
+    color: #27865c;
+}
+
+.cartao-privacidade {
+    margin-top: 20px;
+    padding: 13px;
+
+    border-radius: 10px;
+
+    background: #FBF3F6;
+    color: #806C76;
+
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.cartao-privacidade strong {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #7E214E;
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   CENTRAL SOS
+========================================== */
+
+.sos-destaque {
+    padding: 22px 16px;
+
+    border: 1px solid #E8CFDA;
+    border-radius: 15px;
+
+    background: linear-gradient(145deg, #FFFAFC, #F8EAF0);
+
+    text-align: center;
+}
+
+.sos-simbolo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+
+    margin: 0 auto 13px;
+
+    border-radius: 50%;
+
+    background: #F1D5E0;
+    color: #A52C68;
+
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.sos-destaque h3 {
+    color: #54263F;
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.sos-destaque > p {
+    color: #8D6E7B;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.botao-sos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: 100%;
+    min-height: 58px;
+
+    margin-top: 18px;
+    padding: 12px;
+
+    border: none;
+    border-bottom: 3px solid #C49A50;
+    border-radius: 11px;
+
+    background: linear-gradient(135deg, #A52C68, #7E214E);
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 13px rgba(165, 44, 104, .22);
+
+    transition: .2s;
+}
+
+.botao-sos:hover {
+    background: #7E214E;
+    transform: translateY(-1px);
+}
+
+.botao-sos.sos-acionado {
+    background: #8D6578;
+    box-shadow: none;
+    cursor: default;
+}
+
+.sos-ponto-pulso {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow: 0 0 0 5px rgba(255,255,255,.2);
+}
+
+.confirmacao-sos {
+    margin-top: 15px;
+    padding: 14px;
+
+    border: 1px solid #E8C2D0;
+    border-radius: 10px;
+
+    background: #fff;
+
+    text-align: left;
+
+    color: #76505F;
+
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+.confirmacao-sos[hidden] {
+    display: none;
+}
+
+.confirmacao-sos strong {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #7E214E;
+    font-size: 12px;
+}
+
+.confirmacao-sos p + p {
+    margin-top: 9px;
+}
+
+.confirmacao-sos .orientacao-emergencia {
+    padding-top: 8px;
+    border-top: 1px solid #EEDFE5;
+    font-weight: 700;
+}
+
+.sos-explicacao {
+    margin-top: 21px;
+    padding: 0 3px;
+}
+
+.sos-explicacao h3 {
+    color: #54263F;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.sos-explicacao p {
+    color: #806C76;
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+.sos-aviso-tecnico {
+    margin-top: 17px;
+    padding: 12px;
+
+    border-left: 3px solid #C49A50;
+    border-radius: 6px;
+
+    background: #FFF9EE;
+    color: #80643D;
+
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.sos-aviso-tecnico strong {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #80602F;
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .cabecalho {
+        height: 66px;
+        padding: 0 10px;
+    }
+
+    .logo {
+        gap: 5px;
+        font-size: 20px;
+    }
+
+    .flor-logo {
+        font-size: 27px;
+    }
+
+    .menu {
+        gap: 2px;
+    }
+
+    .item-menu {
+        height: 39px;
+        padding: 0 9px;
+        font-size: 11px;
+    }
+
+    .avatar-usuario {
+        width: 37px;
+        height: 37px;
+        margin-left: 4px;
+    }
+
+    .avatar-cabeca {
+        top: 6px;
+        left: 10px;
+    }
+
+    .avatar-corpo {
+        left: 3px;
+    }
+
+    #map {
+        top: 66px;
+        height: calc(100% - 66px);
+    }
+
+    .painel {
+        top: 80px;
+        left: 10px;
+
+        width: calc(100% - 20px);
+        max-width: none;
+
+        max-height: calc(100% - 90px);
+
+        padding: 19px;
+    }
+
+    .cabecalho-painel h2 {
+        font-size: 20px;
+    }
+
+}

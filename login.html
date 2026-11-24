@@ -35,7 +35,7 @@
     </div>
 
     <!-- USUÁRIA -->
-    <form class="form" id="form-usuaria" data-role-panel="usuaria" role="tabpanel" aria-labelledby="tab-usuaria" data-demo novalidate>
+    <form class="form" id="form-usuaria" data-role-panel="usuaria" role="tabpanel" aria-labelledby="tab-usuaria" data-auth="login" novalidate>
       <div class="field">
         <label for="lu-email">E-mail</label>
         <input id="lu-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
@@ -49,10 +49,10 @@
     </form>
 
     <!-- EMPRESA -->
-    <form class="form" id="form-empresa" data-role-panel="empresa" role="tabpanel" aria-labelledby="tab-empresa" data-demo novalidate hidden>
+    <form class="form" id="form-empresa" data-role-panel="empresa" role="tabpanel" aria-labelledby="tab-empresa" data-auth="login" novalidate hidden>
       <div class="field">
         <label for="le-email">E-mail comercial ou CNPJ</label>
-        <input id="le-email" name="login" type="text" autocomplete="username" placeholder="contato@empresa.com" required>
+        <input id="le-email" name="email" type="email" autocomplete="username" placeholder="contato@empresa.com" required>
       </div>
       <div class="field">
         <label for="le-senha">Senha</label>
@@ -69,6 +69,8 @@
 <script src="js/flower.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
 <script src="js/auth.js"></script>
 </body>
 </html>

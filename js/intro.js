@@ -5,96 +5,41 @@
 //   /           toca 1 vez por sessão do navegador
 //   /?intro=1   força tocar de novo (bom para testar)
 //   /?intro=0   pula
-
-
 (function () {
-
   const intro = document.getElementById("intro");
-
   const body = document.body;
- 
   if (!intro) return;
- 
+
   const params = new URLSearchParams(location.search);
- 
-  // Só pula a introdução se a URL tiver ?intro=0
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let seen = false;
+  try { seen = sessionStorage.getItem("aura_intro_seen") === "1"; } catch (_) {}
 
-  const skip = params.get("intro") === "0";
- 
+  const force = params.get("intro") === "1";
+  const skip = params.get("intro") === "0" || reduce || (seen && !force);
+
   let finished = false;
- 
   function finish() {
-
     if (finished) return;
- 
     finished = true;
- 
+    try { sessionStorage.setItem("aura_intro_seen", "1"); } catch (_) {}
     intro.remove();
-
-    body.classList.remove("intro-pending");
-
+    body.classList.remove("intro-pending"); // libera as animações de entrada do site
   }
- 
-  // Se solicitado, pula a animação
 
-  if (skip) {
+  if (skip) { finish(); return; }
 
-    finish();
+  // começa a animação
+  requestAnimationFrame(() => intro.classList.add("play"));
 
-    return;
+  // fim da abertura: aos 4,6 s começa o fade-out (0,8 s)
+  const outTimer = setTimeout(() => intro.classList.add("out"), 4600);
+  intro.addEventListener("animationend", (e) => { if (e.animationName === "intro-out") finish(); });
+  setTimeout(finish, 6000); // garantia
 
-  }
- 
-  // Inicia a animação da florzinha
-
-  requestAnimationFrame(() => {
-
-    intro.classList.add("play");
-
-  });
- 
-  // Inicia o desaparecimento da introdução
-
-  const outTimer = setTimeout(() => {
-
+  document.getElementById("intro-skip").addEventListener("click", () => {
+    clearTimeout(outTimer);
     intro.classList.add("out");
-
-  }, 4600);
- 
-  // Finaliza quando a animação termina
-
-  intro.addEventListener("animationend", (e) => {
-
-    if (e.animationName === "intro-out") {
-
-      finish();
-
-    }
-
+    setTimeout(finish, 850);
   });
- 
-  // Garantia para a introdução não ficar presa
-
-  setTimeout(finish, 6000);
- 
-  // Botão para pular a animação
-
-  const skipButton = document.getElementById("intro-skip");
- 
-  if (skipButton) {
-
-    skipButton.addEventListener("click", () => {
-
-      clearTimeout(outTimer);
-
-      intro.classList.add("out");
-
-      setTimeout(finish, 850);
-
-    });
-
-  }
-
 })();
-
- 

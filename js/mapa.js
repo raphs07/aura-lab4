@@ -14,7 +14,37 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // 2. ALERTAS CADASTRADOS
 // ==========================================
 
-var alertas = [];
+// Dados fictícios utilizados apenas para demonstração
+var alertas = [
+
+    {
+        latitude: -15.8010,
+        longitude: -48.0200,
+        raio: 300,
+        nivel: 'medio',
+        categoria: 'Iluminação insuficiente',
+        simulado: true
+    },
+
+    {
+        latitude: -15.8030,
+        longitude: -48.0250,
+        raio: 300,
+        nivel: 'alto',
+        categoria: 'Local com alerta de demonstração',
+        simulado: true
+    },
+
+    {
+        latitude: -15.7970,
+        longitude: -48.0150,
+        raio: 300,
+        nivel: 'medio',
+        categoria: 'Movimentação reduzida',
+        simulado: true
+    }
+
+];
 
 
 // ==========================================
@@ -307,16 +337,25 @@ configurarBuscaEndereco(
 );
 
 
+
 // ==========================================
-// 5. BUSCAR ATÉ TRÊS ROTAS A PÉ
+// 5. BUSCAR ROTAS POR MEIO DE TRANSPORTE
 // ==========================================
+
 async function buscarRotas(origem, destino, meioTransporte) {
 
     var configuracoes = {
         a_pe: 'pedestrian',
-        bicicleta: 'bicycle',
-        carro: 'auto'
+        bicicleta: 'bicycle'
     };
+
+    // O Valhalla não calcula itinerários de ônibus
+    if (meioTransporte === 'onibus') {
+        throw new Error(
+            'A simulação de ônibus será integrada separadamente. ' +
+            'Por enquanto, escolha A pé ou Bicicleta.'
+        );
+    }
 
     var pedido = {
         locations: [
@@ -329,6 +368,7 @@ async function buscarRotas(origem, destino, meioTransporte) {
                 lon: destino.longitude
             }
         ],
+
         costing: configuracoes[meioTransporte],
         alternates: 2,
         units: 'kilometers',
@@ -360,6 +400,7 @@ async function buscarRotas(origem, destino, meioTransporte) {
 
     return dados.routes;
 }
+
 
 
 // ==========================================
@@ -435,10 +476,35 @@ function analisarRisco(rota) {
 
     });
 
-    return {
-        nivel: nivel,
-        quantidade: alertasEncontrados.size
-    };
+    var quantidadeSimulada = 0;
+
+alertasEncontrados.forEach(function (indice) {
+
+    if (alertas[indice].simulado === true) {
+        quantidadeSimulada++;
+    }
+
+});
+
+return {
+    nivel: nivel,
+    quantidade: alertasEncontrados.size,
+    simulados: quantidadeSimulada
+};
+
+alertasEncontrados.forEach(function (indice) {
+
+    if (alertas[indice].simulado === true) {
+        quantidadeSimulada++;
+    }
+
+});
+
+return {
+    nivel: nivel,
+    quantidade: alertasEncontrados.size,
+    simulados: quantidadeSimulada
+};
 
 }
 
@@ -447,35 +513,19 @@ function analisarRisco(rota) {
 // 8. FORMATAR TEMPO
 // ==========================================
 
-function formatarTempo(segundos) {
+function formatarTempo(segundos, meioTransporte) {
 
     var minutos = Math.round(segundos / 60);
 
-    if (minutos < 1) {
-        return 'Menos de 1 minuto';
-    }
+    var nomes = {
+        a_pe: 'a pé',
+        bicicleta: 'de bicicleta',
+        onibus: 'de ônibus'
+    };
 
-    if (minutos === 1) {
-        return '1 minuto a pé';
-    }
-
-    var horas = Math.floor(minutos / 60);
-    var minutosRestantes = minutos % 60;
-
-    if (horas > 0) {
-
-        if (minutosRestantes === 0) {
-            return horas + (horas === 1 ? ' hora a pé' : ' horas a pé');
-        }
-
-        return horas + ' h e ' + minutosRestantes + ' min a pé';
-    }
-
-    return minutos + ' minutos a pé';
+    return minutos + ' minutos ' + (nomes[meioTransporte] || '');
 
 }
-
-
 // ==========================================
 // 9. CONFIGURACAO VISUAL DE CADA ROTA
 // ==========================================
@@ -610,7 +660,7 @@ function selecionarRota(indice) {
 // 12. MOSTRAR AS OPCOES DE ROTAS
 // ==========================================
 
-function mostrarOpcoesRotas(rotas, origem, destino) {
+function mostrarOpcoesRotas(rotas, origem, destino, meioTransporte) {
 
     rotasEncontradas = [];
 
@@ -657,16 +707,27 @@ function mostrarOpcoesRotas(rotas, origem, destino) {
 
         var distanciaKm = (rota.distance / 1000).toFixed(1);
 
-        var tempo = formatarTempo(rota.duration);
+        var tempo = formatarTempo(rota.duration, meioTransporte);
 
         var recomendacao = '';
 
-        if (indice === 0 && rota.risco.nivel === 'verde') {
+if (indice === 0) {
 
-            recomendacao =
-                '<span class="recomendada">★ Menor nível de alertas</span>';
+    recomendacao =
+        '<br><span class="recomendada">★ Rota com menor nível de alertas</span>';
 
-        }
+}
+
+var avisoSimulacao = '';
+
+if (rota.risco.simulados > 0) {
+
+    avisoSimulacao =
+        '<br><small>⚠ ' +
+        rota.risco.simulados +
+        ' alerta(s) simulado(s) para demonstração</small>';
+
+}
 
         cartao.innerHTML =
 
@@ -691,7 +752,7 @@ function mostrarOpcoesRotas(rotas, origem, destino) {
                 'Tempo: ' + tempo + '<br>' +
                 'Distância: ' + distanciaKm + ' km<br>' +
                 'Alertas encontrados: ' + rota.risco.quantidade +
-
+                avisoSimulacao +
                 recomendacao +
 
             '</div>';
@@ -721,15 +782,20 @@ function mostrarOpcoesRotas(rotas, origem, destino) {
 }
 
 
+
 // ==========================================
 // 13. BOTAO DE BUSCAR ROTAS
 // ==========================================
 
+var campoMeioTransporte =
+    document.getElementById('meio-transporte');
+
 botaoBuscar.addEventListener('click', async function () {
 
     var origem = locaisSelecionados.origem;
-
     var destino = locaisSelecionados.destino;
+
+    var meioTransporte = campoMeioTransporte.value;
 
     if (!origem || !destino) {
 
@@ -737,7 +803,6 @@ botaoBuscar.addEventListener('click', async function () {
             'Pesquise e selecione uma opção para a origem e outra para o destino.';
 
         return;
-
     }
 
     origem = {
@@ -756,14 +821,24 @@ botaoBuscar.addEventListener('click', async function () {
 
     limparMapa();
 
+    var nomeTransporte = {
+        a_pe: 'a pé',
+        bicicleta: 'de bicicleta',
+        onibus: 'de ônibus'
+    };
+
     informacoes.textContent =
-        'Calculando os caminhos a pé...';
+        'Calculando caminhos ' + nomeTransporte[meioTransporte] + '...';
 
     try {
 
-        var rotas = await buscarRotas(origem, destino);
+        var rotas = await buscarRotas(
+            origem,
+            destino,
+            meioTransporte
+        );
 
-        mostrarOpcoesRotas(rotas, origem, destino);
+        mostrarOpcoesRotas(rotas, origem, destino, meioTransporte);
 
     } catch (erro) {
 

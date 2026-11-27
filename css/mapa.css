@@ -54,24 +54,23 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 9px;
-
-    color: #ff6da2;
+    gap: 8px;
     text-decoration: none;
-
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: 2px;
+    cursor: pointer;
 }
 
-.flor-logo {
-    display: inline-block;
+.logo .flower {
+    width: 38px;
+    height: 38px;
+    display: block;
+    flex-shrink: 0;
+}
 
-    color: #ffbd4c;
-    font-size: 34px;
-
-    animation: girarFlor 9s linear infinite;
-    transform-origin: center;
+.logo span:last-child {
+    font-size: 28px;
+    font-weight: bold;
+    color: #f28ab5;
+    letter-spacing: 2px;
 }
 
 @keyframes girarFlor {

@@ -310,8 +310,13 @@ configurarBuscaEndereco(
 // ==========================================
 // 5. BUSCAR ATÉ TRÊS ROTAS A PÉ
 // ==========================================
+async function buscarRotas(origem, destino, meioTransporte) {
 
-async function buscarRotas(origem, destino) {
+    var configuracoes = {
+        a_pe: 'pedestrian',
+        bicicleta: 'bicycle',
+        carro: 'auto'
+    };
 
     var pedido = {
         locations: [
@@ -324,7 +329,7 @@ async function buscarRotas(origem, destino) {
                 lon: destino.longitude
             }
         ],
-        costing: 'pedestrian',
+        costing: configuracoes[meioTransporte],
         alternates: 2,
         units: 'kilometers',
         language: 'pt-BR',
@@ -344,15 +349,13 @@ async function buscarRotas(origem, destino) {
     );
 
     if (!resposta.ok) {
-        throw new Error(
-            'O serviço de rotas não respondeu. Tente novamente mais tarde.'
-        );
+        throw new Error('Não foi possível calcular a rota.');
     }
 
     var dados = await resposta.json();
 
     if (!dados.routes || dados.routes.length === 0) {
-        throw new Error('Não foi possível encontrar um caminho a pé.');
+        throw new Error('Nenhuma rota encontrada.');
     }
 
     return dados.routes;

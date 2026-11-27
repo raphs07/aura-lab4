@@ -17,12 +17,10 @@
 <body>
 
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
-
-        <a href="#" class="logo" id="logoAura">
-            <span class="flor-logo">❀</span>
-            <span>AURA</span>
-        </a>
+    <a href="#" class="logo" id="logoAura">
+        <div data-flower="brand-flower"></div>
+        <span>AURA</span>
+    </a>
 
         <nav class="menu">
 
@@ -99,12 +97,27 @@
             id="destino"
             placeholder="Digite para onde deseja ir">
 
+        
         <div id="sugestoes-destino" class="sugestoes-endereco"></div>
 
+        <label for="meio-transporte">Meio de transporte</label>
+
+        <select id="meio-transporte">
+            <option value="a_pe">A pé</option>
+            <option value="bicicleta">Bicicleta</option>
+            <option value="carro">Carro</option>
+        </select>
 
         <button id="btnBuscar" class="botao-principal" type="button">
             Buscar rotas
         </button>
+
+        <p class="aviso">
+    A ausência de alertas não garante que um local seja seguro.
+    Os tempos e distâncias são estimativas e variam conforme o meio de transporte.
+    Alguns indicadores podem utilizar dados simulados para demonstração.
+    </p>
+
 
 
         <div id="informacoes-rota">
@@ -426,6 +439,7 @@
     <script src="js/supabase-client.js"></script>
     <script src="js/map-auth.js"></script>
     <script src="js/mapa.js"></script>
+    <script src="js/flower.js"></script>
 
 
     <!-- NAVEGAÇÃO -->
@@ -646,6 +660,7 @@
         fecharPaineis();
 
     </script>
+
 
 </body>
 </html>
